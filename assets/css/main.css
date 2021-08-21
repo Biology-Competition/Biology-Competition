@@ -1403,10 +1403,19 @@ p {
   top: -5px;
 }
 
+.apply-btn, apply-btn:focus  {
+    background-color: #C94ED0 !important; 
+    color: white !important; 
+}
+.apply-btn:hover {
+    background-color: #F3B440 !important;
+    color: white !important; 
+}
+
 .hero-section {
-  padding-top: 300px;
+  padding-top: 200px;
   padding-bottom: 240px;
-  background-color: #F4F7FC;
+  background-color: #7c42df;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
