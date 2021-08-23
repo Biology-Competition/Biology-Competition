@@ -1,2 +1,2 @@
 # Biology-Competition
-ARBC-main but with new colors and some fixed issues
+Official website for American Biology Regional Competition
