@@ -2105,3 +2105,8 @@ p {
   font-size: 18px;
   color: #313450;
 }
+
+.team-image {
+    height: 300px;
+    object-fit: cover;
+}
