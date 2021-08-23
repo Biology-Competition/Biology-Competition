@@ -4,6 +4,12 @@ const form = document.forms['submit-to-google-sheet']
 form.addEventListener('submit', e => {
     e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
+      .then(response => success(response))
       .catch(error => console.error('Error!', error.message))
 })
+
+function success(response) {
+    console.log('Success!', response);
+    document.getElementById("thanks").style.display = "block";
+    document.getElementById("subscribe-btn").style.display = "none";
+}

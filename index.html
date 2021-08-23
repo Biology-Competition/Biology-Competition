@@ -200,7 +200,11 @@
                             <form action="#" class="subscribe-form wow fadeInUp" data-wow-delay=".8s" name="submit-to-google-sheet">
                                 <input type="email" name="Email" id="subs-input" placeholder="Enter your email" required>
                                 <!--Find list of emails here: https://docs.google.com/spreadsheets/d/1yOx4UKHUJ6277Klj1yd4g4r0b_n82VDAYYqHEHI9Gn4/edit?usp=sharing -->
-                                <button type="submit" class="theme-btn">SUBSCRIBE</button>
+                                <button type="submit" class="theme-btn" id="subscribe-btn">SUBSCRIBE</button>
+                                <div id="thanks" style="display: none">
+                                    <i class="lni lni-checkmark-circle text-white mb-10" style="font-size: 60px; float: left"></i>
+                                    <p class="text-white"> Thank you for subscribing to our newsletter!</p>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -246,7 +250,7 @@
                             <nav class="footer-menu">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li><a href="competition.html">Service</a></li>
+                                    <li><a href="competition.html">Competition</a></li>
                                     <li><a href="resources.html">Resources</a></li>
                                     <li><a href="sponsors.html">Sponsors</a></li>
                                     <li><a href="about.html">About</a></li>
