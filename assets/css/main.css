@@ -1154,6 +1154,9 @@ p {
 .sticky .navbar-toggler .toggler-icon {
   background-color: #222;
 }
+.toggler-icon {
+    height: 3px !important;
+}
 
 .navbar {
   position: relative;
@@ -1191,7 +1194,7 @@ p {
 
 .navbar-toggler.active .toggler-icon:nth-of-type(1) {
   transform: rotate(45deg);
-  top: 7px;
+  top: 8px;
 }
 
 .navbar-toggler.active .toggler-icon:nth-of-type(2) {
@@ -1200,7 +1203,7 @@ p {
 
 .navbar-toggler.active .toggler-icon:nth-of-type(3) {
   transform: rotate(135deg);
-  top: -7px;
+  top: -8px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -1237,6 +1240,7 @@ p {
 .nav-item-btn {
     padding: 0 !important;
     max-width:150px;
+    margin-right: 20px;
 }
 
 .navbar-nav .nav-item:first-child {
@@ -1254,7 +1258,10 @@ p {
     margin: 0;
   }
     .nav-item-btn {
-        padding: 20px 0 0!important;
+        margin: 20px 0!important;
+    }
+    .apply-btn {
+        padding: 12px !important;
     }
 }
 
