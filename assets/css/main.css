@@ -218,7 +218,7 @@ p {
 }
 
 .scroll-top:hover {
-  background: rgba(228, 78, 131, 0.8);
+  background: #7c42df;
   color: #fff;
 }
 
@@ -1269,6 +1269,12 @@ p {
   .navbar-nav .nav-item {
     margin: 0;
   }
+    .nav-item-btn {
+        margin: 20px 0!important;
+    }
+    .apply-btn {
+        padding: 12px !important;
+    }
 }
 
 .navbar-nav .nav-item a {
