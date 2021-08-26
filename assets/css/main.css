@@ -1515,9 +1515,9 @@ p {
 
 .icon-gradient {
   position: relative;
-  width: 69px;
-  height: 69px;
-  line-height: 75px;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
   border-radius: 50%;
   color: #fff;
   margin-left: auto;
@@ -2050,7 +2050,12 @@ p {
 }
 
 .textbook {
-    width: 100%!important;
+    width: 100%;
+    aspect-ratio: 9/12;
+    object-fit: cover;
+}
+.sponsor {
+    width: 100%;
 }
 
 /*===========================
