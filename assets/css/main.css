@@ -1128,6 +1128,10 @@ p {
   transition: all 0.3s ease-out 0s;
 }
 
+.row {
+    --bs-gutter-x: 0;
+}
+
 .sticky {
   position: fixed;
   z-index: 99;
@@ -1988,6 +1992,10 @@ p {
   z-index: -1;
 }
 
+.footer-bg {
+    width: 100vw;
+}
+
 .footer .footer-links .logo {
   margin-bottom: 30px;
 }
@@ -2127,4 +2135,17 @@ p {
 .team-image {
     height: 300px;
     object-fit: cover;
+}
+
+/* == Disable wow animation on mobile*/
+
+@media (max-width: 800px) {
+    .wow {
+        visibility: visible !important;
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -o-animation: none !important;
+        -ms-animation: none !important;
+        animation: none !important;
+    }
 }
