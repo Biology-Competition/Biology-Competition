@@ -1420,11 +1420,11 @@ p {
   top: -5px;
 }
 
-.apply-btn, apply-btn:focus  {
+.apply-btn, apply-btn:focus, .purp-btn, .purp-btn:focus  {
     background-color: #C94ED0 !important; 
     color: white !important; 
 }
-.apply-btn:hover {
+.apply-btn:hover,.purp-btn:hover {
     background-color: #F3B440 !important;
     color: white !important; 
 }
