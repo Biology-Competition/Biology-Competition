@@ -1,0 +1,114 @@
+body {
+    overflow-x: hidden;
+}
+.white {
+    color: white;
+}
+h2.toggle-box {
+    font-size: 30px;
+}
+p.toggle-box {
+    font-size: 18px;
+}
+.centered-y {
+     position: absolute;
+     width: 90%;
+     top: 50%;
+     transform:translateY(-50%);
+}
+ .distribution-map {
+     position: relative;
+     width: 100%;
+     padding: 20px;
+     box-sizing: border-box;
+     margin: 0 auto;
+     overflow-x: hidden;
+}
+ .distribution-map > img {
+     width: 100%;
+     position: relative;
+     margin: 0;
+     padding: 0;
+}
+ .distribution-map .map-point {
+     cursor: pointer;
+     outline: none;
+     z-index: 0;
+     position: absolute;
+     width: 40px;
+     height: 40px;
+     border-radius: 20px;
+     opacity: 0.8;
+     transform: translate(-50%, -50%);
+     transition: opacity 0.25s ease-in-out 0.25s, width 0.25s ease-in-out 0.25s, height 0.25s ease-in-out 0.25s, z-index 0.25s ease-in-out 0.25s;
+     background: rgba(26, 26, 26, 0.85);
+     border: 5px solid #CF5FD5;
+     overflow: hidden;
+}
+ .distribution-map .map-point .content {
+     opacity: 0;
+     transition: opacity 0.25s ease-in-out;
+     padding: 5%;
+     width: 100%;
+     height: 100%;
+    /* left: 50%;
+    */
+     overflow: overlay;
+     overflow-y:hidden;
+}
+ .distribution-map .map-point:active, .distribution-map .map-point:focus {
+     top:-50%;
+     left:-50%;
+     margin: 0;
+     padding: 0;
+     opacity: 1;
+     width: 300px;
+     height: 220px;
+     color: #e5e5e5;
+     z-index: 1;
+     transition: opacity 0.25s ease-in-out, width 0.25s ease-in-out, height 0.25s ease-in-out;
+}
+ .distribution-map .map-point:active .content, .distribution-map .map-point:focus .content {
+     opacity: 1;
+     transition: opacity 0.25s ease-in-out 0.25s, height 0 ease-in-out 0.25s, overflow 0 ease-in-out 5.25s;
+     transition-delay: .25s;
+     overflow: hidden;
+}
+ .distribution-map .map-point:active .content a:focus, .distribution-map .map-point:active .content a:active, .distribution-map .map-point:hover .content a:hover, .distribution-map .map-point:focus .content a:active {
+     color: #CF5FD5;
+}
+@media (max-width: 880px) {
+    .distribution-map .map-point:focus {
+        width: 50vw;
+        height: 50%;
+        top: 50%!important;
+        left: 50%!important;
+        transition: top .5s ease-in-out, left .5s ease-in-out;
+        transition-delay: .25s;
+    }
+    .distribution-map .map-point {
+        transition: top .5s ease-in-out, left .5s ease-in-out;
+/*        transition-delay: .25s;*/
+    }
+}
+@media (max-width: 400px) {
+    .distribution-map .map-point:focus {
+        width: 70vw;
+        height: 80%;
+        top: 50%!important;
+        left: 50%!important;
+        transition: top .5s ease-in-out, left .5s ease-in-out;
+        transition-delay: .25s;
+    }
+    .distribution-map .map-point {
+        transition: top .5s ease-in-out, left .5s ease-in-out;
+/*        transition-delay: .25s;*/
+    }
+    h2.toggle-box {
+        font-size: 25px;
+    }
+    p.toggle-box {
+        font-size: 14px;
+        line-height:normal;
+    }
+}
