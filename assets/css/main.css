@@ -1,11 +1,3 @@
-/*
-SoftLand - Software and SaaS Landing Page
-Author: UIdeck
-*/
-
-/*===========================
-    01.COMMON css 
-===========================*/
 @import url("https://fonts.googleapis.com/css?family=Inter:300,400,600,700,800&display=swap");
 
 html {
@@ -1141,15 +1133,17 @@ p {
   transition: all 0.3s ease-out 0s;
 }
 
-.sticky .navbar {
-  padding: 16px 30px;
+.sticky .navbar{
+  padding: 0;
   background: #fff;
   box-shadow: 0 0 10px rgba(34, 34, 34, 0.05);
 }
-
 @media (max-width: 767px) {
   .sticky .navbar {
-    padding: 5px 30px;
+    padding: 0 30px 0 0;
+  }
+  .sticky .navbar-brand {
+    margin: 3px 30px;
   }
 }
 
@@ -1167,13 +1161,13 @@ p {
 .navbar {
   position: relative;
   transition: all 0.3s ease-out 0s;
-  padding: 16px 30px;
+  padding: 0;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 0px;
 }
 
 .navbar-brand {
-  padding: 0;
+  margin: 10px 30px;
 }
 
 .navbar-brand img {
@@ -1223,6 +1217,9 @@ p {
     box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.1);
     padding: 5px 12px;
   }
+  .navbar {
+    padding: 0 30px 0 0;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1236,12 +1233,15 @@ p {
     box-shadow: 0px 15px 20px 0px rgba(49, 52, 80, 0.1);
     padding: 5px 12px;
   }
+  .navbar {
+    padding: 0 30px 0 0;
+  }
 }
 
 .navbar-nav .nav-item {
-  margin-left: 40px;
+  margin-right: 40px;
   position: relative;
-    padding: 20px 0 0;
+    padding: 32px 0px;
 }
 .nav-item-btn {
     padding: 0 !important;
@@ -1249,19 +1249,20 @@ p {
     margin-right: 20px;
 }
 
-.navbar-nav .nav-item:first-child {
-  margin-left: 0;
-}
+/* .navbar-nav .nav-item:first-child {
+  margin-right: 0;
+} */
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .navbar-nav .nav-item {
-    margin-left: 30px;
+    margin-right: 30px;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .navbar-nav .nav-item {
     margin: 0;
+    padding:0;
   }
     .nav-item-btn {
         margin: 20px 0!important;
@@ -1273,7 +1274,8 @@ p {
 
 @media (max-width: 767px) {
   .navbar-nav .nav-item {
-    margin: 0;
+    margin: 0;    
+    padding:0;
   }
     .nav-item-btn {
         margin: 20px 0!important;
@@ -1307,6 +1309,12 @@ p {
   }
 }
 
+.navbar-nav .nav-item:hover>a {
+  color: #F3B440;
+}
+.navbar-nav .nav-item:hover {
+  cursor: pointer;
+}
 .navbar-nav .nav-item a.active, .navbar-nav .nav-item a:hover {
   color: #F3B440;
 }
@@ -1422,6 +1430,68 @@ p {
   top: -5px;
 }
 
+
+/* @media all and (min-width: 992px) { */
+  .sticky .navbar .nav-item .dropdown-menu {
+    background-color: white;
+  }
+	.navbar .nav-item .dropdown-menu{ 
+    display: none; 
+    background-color: rgba(255, 255, 255, 0.08);
+    border-width: 0;
+    left: -15px;
+    border-radius: 0;
+    min-width: 130px;
+    /* margin: 0; */
+    padding: 5px 5px;
+    
+    animation: rotateX 500ms ease-in-out forwards;
+    transform-origin: top center;
+  }
+	/* .navbar .nav-item:hover .nav-link{   } */
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+  .navbar-nav>li>.dropdown-menu  { display: inline-block; }
+  
+/* }	 */
+.dropdown-item.active {
+  background-color: transparent;
+}
+/* .dropdown_menu {
+} */
+@keyframes rotateX {
+  0% {
+    opacity: 1;
+    transform: rotateX(-90deg);
+  }
+  50% {
+    transform: rotateX(-20deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+@keyframes growDown {
+    0% {
+        transform: scaleY(0)
+    }
+    80% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        transform: scaleY(1)
+    }
+}
+
+.navbar .nav-item .dropdown-item {
+  /* color:#ffffff; */
+  padding: 10px;
+}
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus{
+  background-color: transparent;
+}
+
 .apply-btn, apply-btn:focus, .purp-btn, .purp-btn:focus  {
     background-color: #C94ED0 !important; 
     color: white !important; 
@@ -1535,7 +1605,9 @@ p {
         padding: 40% 0;
     }
 }
-
+#topics, #sponsors {
+  background-color: white;
+}
 .icon-gradient {
   position: relative;
   width: 70px;
@@ -1866,32 +1938,6 @@ p {
   transform: scale(1);
 }
 
-
-.faq-section {
-  position: relative;
-}
-
-.faq-section .faq-img {
-  margin-left: -300px;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .faq-section .faq-img {
-    margin-left: 0;
-    margin-bottom: 50px;
-  }
-}
-
-@media (max-width: 767px) {
-  .faq-section .faq-img {
-    margin-left: 0;
-    margin-bottom: 50px;
-  }
-}
-
-.faq-section .faq-img img {
-  width: 100%;
-}
 
 
 .subscribe-section .subscribe-wrapper {
@@ -2261,3 +2307,38 @@ p {
     }
 }
 
+/* Competition winners */
+.winner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 3vw; 
+  padding: 15px; 
+  margin: 10px
+}
+.rank {
+  font-size: 50px;
+  font-weight: bold;
+  padding: 5px;
+  padding-right: 15px;
+  min-width: 150px;
+  text-align: left;
+}
+.winner-names {
+  text-align: left;
+  /* margin: auto; */
+}
+.winner-names.indiv strong {
+  font-size: 30px;
+}
+
+/* Links */
+.link-underline {
+  text-decoration: underline!important;
+}
+.navy-blue {
+  color: #21277E;
+}
+.purple {
+  color: #CF5FD5;
+}

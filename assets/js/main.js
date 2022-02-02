@@ -1,13 +1,13 @@
 //===== Prealoder
 
-window.onload = function () {
-	window.setTimeout(fadeout, 500);
-}
+// window.onload = function () {
+// 	window.setTimeout(fadeout, 500);
+// }
 
-function fadeout() {
-	document.querySelector('.preloader').style.opacity = '0';
-	document.querySelector('.preloader').style.display = 'none';
-}
+// function fadeout() {
+// 	document.querySelector('.preloader').style.opacity = '0';
+// 	document.querySelector('.preloader').style.display = 'none';
+// }
 
 
 /*=====================================
@@ -15,14 +15,17 @@ Sticky
 ======================================= */
 window.onscroll = function () {
 	var header_navbar = document.querySelector(".navbar-area");
+	var navbar_dropdown = document.getElementsByClassName("dropdown-menu");
 	var sticky = header_navbar.offsetTop;
 	var logo = document.querySelector('.navbar-brand img')
 
 	if (window.pageYOffset > sticky) {
 		header_navbar.classList.add("sticky");
+		navbar_dropdown[0].classList.add("stick");
 		logo.src = 'assets/img/logo/logo.svg';
 	} else {
 		header_navbar.classList.remove("sticky");
+		navbar_dropdown[0].classList.remove("stick");
 		logo.src = 'assets/img/logo/logo.svg';
 	}
 
