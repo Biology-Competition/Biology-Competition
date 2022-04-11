@@ -22,11 +22,9 @@ window.onscroll = function () {
 	if (window.pageYOffset > sticky) {
 		header_navbar.classList.add("sticky");
 		navbar_dropdown[0].classList.add("stick");
-		logo.src = 'assets/img/logo/logo.svg';
 	} else {
 		header_navbar.classList.remove("sticky");
 		navbar_dropdown[0].classList.remove("stick");
-		logo.src = 'assets/img/logo/logo.svg';
 	}
 
 
