@@ -2290,8 +2290,65 @@ p {
 }
 
 .team-image {
-    height: 300px;
     object-fit: cover;
+}
+.size-1 .team-image {
+  height: 300px;
+}
+.size-2 .team-image {
+  height: 250px;
+}
+.size-3 .team-image {
+  height: 200px;
+}
+.size-2 .team-info h4 {
+  font-size: 20px;
+}
+.size-2 .team-info span {
+  font-size: 18px;
+}
+.size-3 .team-info h4 {
+  font-size: 16px;
+}
+.size-3 .team-info span {
+  font-size: 14px;
+}
+.logo.team-image {
+  object-fit: contain;
+}
+@media (min-width: 1200px) {
+  .col-xl-24 {
+      flex: 0 0 auto;
+      width: 20%;
+  }
+}
+@media (min-width: 992px) {
+  .col-lg-24 {
+    flex: 0 0 auto;
+      width: 20%;
+  }
+}
+.alum>.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.alum {
+  display: flex;
+}
+.alum h5 {
+  padding: 3px;
+  padding-right: 10px;
+}
+.alum-social-links {
+  display: flex;
+}
+.alum-social-links a {
+  color:#21277E; 
+  padding: 3px;
+}
+.alum-social-links a:hover {
+  color:#C94ED0;
 }
 
 /* == Disable wow animation on mobile*/
