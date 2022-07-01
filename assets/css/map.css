@@ -54,7 +54,7 @@ p.toggle-box {
     /* left: 50%;
     */
      overflow: overlay;
-     overflow-y:hidden;
+     overflow-y: hidden;
 }
  .distribution-map .map-point:active, .distribution-map .map-point:focus {
      top:-50%;
@@ -77,10 +77,22 @@ p.toggle-box {
  .distribution-map .map-point:active .content a:focus, .distribution-map .map-point:active .content a:active, .distribution-map .map-point:hover .content a:hover, .distribution-map .map-point:focus .content a:active {
      color: #CF5FD5;
 }
+.map-point.norcal:focus, .map-point.socal:focus {
+    left: 15%!important;
+    transition: top .5s ease-in-out, left .5s ease-in-out;
+}
+.map-point.seattle:focus {
+    top: 17%!important;
+    transition: top .5s ease-in-out, left .5s ease-in-out;
+}
+.map-point.norcal, .map-point.socal, .map-point.seattle {
+    transition: top .5s ease-in-out, left .5s ease-in-out;
+}
 @media (max-width: 880px) {
     .distribution-map .map-point:focus {
         width: 50vw;
-        height: 50%;
+        height: 60%;
+        min-height: 230px;
         top: 50%!important;
         left: 50%!important;
         transition: top .5s ease-in-out, left .5s ease-in-out;
@@ -94,7 +106,7 @@ p.toggle-box {
 @media (max-width: 600px) {
     .distribution-map .map-point:focus {
         width: 70vw;
-        height: 80%;
+        height: 90%;
         top: 50%!important;
         left: 50%!important;
         transition: top .5s ease-in-out, left .5s ease-in-out;
