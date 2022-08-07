@@ -1590,7 +1590,7 @@ p {
 }
 
 .vid {
-    padding: 5% 0;
+    margin: 5% 0;
     box-sizing: border-box;
 }
 @media (max-width: 767px) {
