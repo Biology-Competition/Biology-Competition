@@ -2397,3 +2397,41 @@ p {
 .purple {
   color: #CF5FD5;
 }
+.yellow {
+  color: #F3B440;
+}
+.darkpurple {
+  color:#7c42df;
+}
+
+ol.results {
+  margin: 5px;
+  font-weight: bold;
+}
+ol.results li {
+  margin: 5px 0;
+}
+ol.results li::before {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  margin-right: 5px;
+  padding: 3px;
+  border-radius: 18px;
+  width: 35px;
+  height: 35px;
+}
+ol.results li:nth-child(-n+3)::before {
+  content: "3." !important;
+  background-color: goldenrod;
+}
+ol.results li:nth-child(-n+2)::before {
+  content: "2." !important;
+  background-color: silver;
+}
+ol.results li:nth-child(-n+1)::before {
+  content: "1." !important;
+  background-color: gold;
+}
