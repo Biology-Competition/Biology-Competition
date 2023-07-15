@@ -129,10 +129,19 @@
                     </div>
                 </div>
                 <div class="row justify-content-md-center">
-                    <div class="col-xl-4 col-lg-5 col-md-6">
+                    <div class="col-xl-5 col-lg-5 col-md-6">
                         <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.3s">
                             <a href="https://baology.org/" target="_blank">                   <div class="sponsor">
                                 <img src="assets/img/sponsors/baology_logo.png" class="sponsor">
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.3s">
+                            <a href="https://biolympiads.com/" target="_blank">
+                            <div class="sponsor">
+                                <img src="assets/img/sponsors/bIolympiads_logo.png" class="sponsor">
                             </div>
                             </a>
                         </div>
@@ -166,15 +175,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-lg-5 col-md-6">
-                        <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.3s">
-                            <a href="https://biolympiads.com/" target="_blank">
-                            <div class="sponsor">
-                                <img src="assets/img/sponsors/bIolympiads_logo.png" class="sponsor">
-                            </div>
-                            </a>
-                        </div>
-                    </div>
+                    
                     
                 </div>
             </div>
@@ -248,6 +249,15 @@
 		<script src="assets/js/bootstrap.bundle-5.0.0.alpha-1-min.js"></script>
 		<script src="assets/js/count-up.min.js"></script>
 		<script src="assets/js/wow.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+            $(function() {
+                $("#header").load("../assets/insertables/header.html", function() {
+                    $("#austin").addClass("active");
+                });
+            });
+        </script>
+        
 		<script src="assets/js/main.js"></script>
     </body>
 </html>
