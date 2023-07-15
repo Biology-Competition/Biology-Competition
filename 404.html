@@ -16,59 +16,7 @@
 		<link rel="stylesheet" href="https://biologycompetition.org/assets/css/main.css">
     </head>
     <body>
-        <!-- ========================= header start ========================= -->
-        <header class="header">
-            <div class="navbar-area">
-                
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <nav class="navbar navbar-expand-lg">
-                                <a class="navbar-brand" href="https://biologycompetition.org/">
-                                    <img src="https://biologycompetition.org/assets/img/logo/logo.svg" alt="Logo">
-                                </a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="toggler-icon"></span>
-                                    <span class="toggler-icon"></span>
-                                    <span class="toggler-icon"></span>
-                                </button>
-
-                                <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                    <ul id="nav" class="navbar-nav ml-auto">
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/competition.html">Competition</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/resources.html">Resources</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/sponsors.html">Sponsors</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/about.html">About</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="https://biologycompetition.org/regions.html">Regions</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="https://biologycompetition.org/regions/online.html">Online Qualifier</a></li>
-                                                <li><a class="dropdown-item" href="https://biologycompetition.org/regions/dmv.html">DMV</a></li>
-                                                <li><a class="dropdown-item" href="https://biologycompetition.org/regions/socal.html">Socal</a></li>
-                                                <li><a class="dropdown-item" href="https://biologycompetition.org/regions/texas.html">Texas</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div> <!-- navbar collapse -->
-                            </nav> <!-- navbar -->
-                        </div>
-                    </div> <!-- row -->
-                
-            </div> <!-- navbar area -->
-
-        </header>
+        <div id="header"></div>
         <!-- ========================= header end ========================= -->
 
         <!-- ========================= slider-section start ========================= -->
@@ -156,5 +104,14 @@
 		<script src="https://biologycompetition.org/assets/js/count-up.min.js"></script>
 		<script src="https://biologycompetition.org/assets/js/wow.min.js"></script>
 		<script src="https://biologycompetition.org/assets/js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+            $(function() {
+                $("#header").load("../assets/insertables/header.html");
+            });
+        </script>
+        
+        <script src="../assets/js/main.js"></script>
+
     </body>
 </html>
