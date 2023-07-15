@@ -1603,7 +1603,7 @@ p {
         padding: 40% 0;
     }
 }
-#topics, #sponsors {
+section#topics, section#sponsors {
   background-color: white;
 }
 .icon-gradient {
@@ -2423,15 +2423,25 @@ ol.results li::before {
   width: 35px;
   height: 35px;
 }
+
+ol.results li::before {
+  background-color:#51589c;
+}
+ol.results li:nth-child(-n+5)::before {
+  content: "5.";
+}
+ol.results li:nth-child(-n+4)::before {
+  content: "4.";
+}
 ol.results li:nth-child(-n+3)::before {
-  content: "3." !important;
+  content: "3.";
   background-color: goldenrod;
 }
 ol.results li:nth-child(-n+2)::before {
-  content: "2." !important;
+  content: "2.";
   background-color: silver;
 }
 ol.results li:nth-child(-n+1)::before {
-  content: "1." !important;
+  content: "1.";
   background-color: gold;
 }

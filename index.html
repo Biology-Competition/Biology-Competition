@@ -20,82 +20,7 @@
     </head>
     <body>
 
-        <!-- ========================= preloader start ========================= -->
-<!--
-            <div class="preloader">
-                <div class="loader">
-                    <div class="ytp-spinner">
-                        <div class="ytp-spinner-container">
-                            <div class="ytp-spinner-rotator">
-                                <div class="ytp-spinner-left">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
-                                <div class="ytp-spinner-right">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
--->
-        <!-- preloader end -->
-
-        <!-- ========================= header start ========================= -->
-        <header class="header">
-            <div class="navbar-area">
-                
-                    <div class="row" width="100vw">
-                        <div class="col-lg-12">
-                            <nav class="navbar navbar-expand-lg">
-                                <a class="navbar-brand" href="./">
-                                    <img src="assets/img/logo/logo.svg" alt="Logo">
-                                </a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="toggler-icon"></span>
-                                    <span class="toggler-icon"></span>
-                                    <span class="toggler-icon"></span>
-                                </button>
-
-                                <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                    <ul id="nav" class="navbar-nav ml-auto">
-                                        <li class="nav-item">
-                                            <a class="page-scroll active" href="./">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="competition.html">Competition</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="resources.html">Resources</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="sponsors.html">Sponsors</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="about.html">About</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="page-scroll" href="regions.html">Regions</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="regions/online.html">Online Qualifier</a></li>
-                                                <li><a class="dropdown-item" href="regions/dmv.html">DMV</a></li>
-                                                <li><a class="dropdown-item" href="regions/socal.html">Socal</a></li>
-                                                <li><a class="dropdown-item" href="regions/texas.html">Texas</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div> <!-- navbar collapse -->
-                            </nav> <!-- navbar -->
-                        </div>
-                    </div> <!-- row -->
-                
-            </div> <!-- navbar area -->
-
-        </header>
-        <!-- ========================= header end ========================= -->
-
+        <div id="header"></div>
         <!-- ========================= slider-section start ========================= -->
         <section id="home" class="hero-section img-bg" style="background-image: url(assets/img/hero/hero-bg.svg); padding: 200px 0">
             <div class="container">
@@ -106,7 +31,7 @@
                             <p class="wow fadeInLeft" data-wow-delay=".6s" data-wow-duration="1.3s">The ARBC is a team based biology competition for you and your friends to test your knowledge of life science topics.</p>
                             
                             <p class="wow fadeInLeft" data-wow-delay=".6s" data-wow-duration="1.3s" style="background-color: #AA85EA; border-radius: 3vw; padding: 30px;">
-                                <strong> &#128226; REGISTRATION: </strong>The regional competitions are coming up, please visit our <a href="competition.html" style="color:white;text-decoration: underline">competitions page</a> to sign up!
+                                <strong> &#127881; WINNERS: </strong>National results are out <a href="competition.html" style="color:white;text-decoration: underline">here</a>! Thank you to everyone who participated this year and we hope to see you back next year!
                             </p>
                             
 
@@ -352,7 +277,14 @@
         <script src="assets/js/contact.js"></script>
 		<script src="assets/js/wow.min.js"></script>
 		<script src="assets/js/main.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+            $(function() {
+                $("#header").load("../assets/insertables/header.html", function() {
+                    $("#home").addClass("active");
+                });
+            });
+        </script>
         <script src="assets/js/formsubmit.js"></script>
     </body>
 </html>
