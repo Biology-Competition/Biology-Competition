@@ -2148,10 +2148,10 @@ section#topics, section#sponsors {
     object-fit: cover;
 }
 .size-1 .team-image {
-  height: 300px;
+  height: 280px;
 }
 .size-2 .team-image {
-  height: 250px;
+  height: 220px;
 }
 .size-3 .team-image {
   height: 200px;
@@ -2190,6 +2190,7 @@ section#topics, section#sponsors {
 }
 .alum {
   display: flex;
+  white-space: nowrap;
 }
 .alum h5 {
   padding: 3px;
@@ -2205,7 +2206,6 @@ section#topics, section#sponsors {
 .alum-social-links a:hover {
   color:#C94ED0;
 }
-
 /* == Disable wow animation on mobile*/
 
 @media (max-width: 800px) {
