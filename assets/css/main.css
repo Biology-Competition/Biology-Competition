@@ -2220,6 +2220,18 @@ section#topics, section#sponsors {
 }
 
 /* Competition winners */
+.callout {
+  padding: 4%;
+}
+@media (max-width: 615px) {
+  .callout {
+    padding: 0;
+  }
+  .callout .theme-btn{
+    font-size: 18px;
+    padding: 10px;
+  }
+}
 .winner {
   display: flex;
   flex-direction: row;
