@@ -227,6 +227,14 @@
                     $("#resources").addClass("active");
                 });
             });
+            
+    $(function() {
+        $("#header").load("../assets/insertables/header.html", function() {
+            console.log("Header loaded successfully!");  // Debugging
+            $("#engagement").addClass("active");
+        });
+    });
+
         </script>
     </body>
 </html>
