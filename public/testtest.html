@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARBC Test Quiz</title>
+  <title>Biology Competition Quiz</title>
   
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+  
 
   <style>
     body {
@@ -86,121 +86,78 @@
     <p id="result"></p>
   </div>
 
-    <footer class="footer pt-150 gray-bg">
-      <img src="assets/img/shape/footer-bg.svg" alt="" class="footer-bg">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="footer-links text-center">
-              <a href="./" class="logo">
-                <img src="assets/img/logo/logo.svg" alt="" height="100px">
-              </a>
-              <nav class="footer-menu">
-                <ul>
-                  <li><a href="./">Home</a></li>
-                  <li><a href="competition.html">Competition</a></li>
-                  <li><a href="resources.html">Resources</a></li>
-                  <li><a href="sponsors.html">Sponsors</a></li>
-                  <li><a href="about.html">About</a></li>
-                  <li><a href="regions.html">Regions</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <div class="copyright-area text-center">
-          <p class="mb-0">&copy; 2024 American Regional Biology Competition</p>
-        </div>
-      </div>
-    </footer>
-    
-    <a href="#" class="scroll-top">
-      <i class="lni lni-chevron-up"></i>
-    </a>
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
 
-    <script src="assets/js/bootstrap.bundle-5.0.0.alpha-1-min.js"></script>
-    <script src="assets/js/count-up.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-     
-      $(function() {
-        $("#header").load("../assets/insertables/header.html");
-      });
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-     
-      const warningMsg = document.getElementById("warning-msg");
-      const logDiv = document.getElementById("log");
+    // Answer Key
+    const answerKey = {
+      q1: "Mitochondria",
+      q2: "Nucleotides",
+      q3: "Kidney",
+      q4: "Hemoglobin",
+      q5: "Protein Synthesis"
+    };
 
-      
-      function sendLogEvent(eventType) {
-        fetch('http://localhost:8000/log-event', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ eventType })
-        })
-        .then(response => response.json())
-        .then(data => console.log('Logged event:', data))
-        .catch(error => console.error('Error logging event:', error));
+    let violations = 0;
+
+    // Detect tab switching
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden) {
+        document.getElementById("warning").style.display = "block";
+        violations++;
       }
+    });
 
-      
-      document.addEventListener("visibilitychange", function() {
-        if (document.visibilityState === "hidden") {
-          warningMsg.style.display = "block";
-          warningMsg.textContent = "Warning: Tab switching detected!";
-          sendLogEvent("tab_switch");
-          const time = new Date().toLocaleTimeString();
-          const newLog = document.createElement("p");
-          newLog.textContent = `${time} - Tab switch detected`;
-          logDiv.appendChild(newLog);
-        }
+    // Detect cursor leaving the window
+    document.addEventListener("mouseleave", function(e) {
+      if (e.clientY <= 0) {
+        document.getElementById("warning").style.display = "block";
+        violations++;
+      }
+    });
+
+    // Form submission handling
+    document.getElementById("quiz-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let score = 0;
+      let name = document.getElementById("name").value;
+      let answers = new FormData(e.target);
+      let userAnswers = {};
+
+      answers.forEach((value, key) => {
+        userAnswers[key] = value;
+        if (value === answerKey[key]) score++;
       });
 
-      // Cursor exit detection
-      document.addEventListener("mouseleave", function(e) {
-        if (e.clientY <= 0) {
-          warningMsg.style.display = "block";
-          warningMsg.textContent = "Warning: Cursor left the window!";
-          sendLogEvent("cursor_exit");
-          const time = new Date().toLocaleTimeString();
-          const newLog = document.createElement("p");
-          newLog.textContent = `${time} - Cursor left the window`;
-          logDiv.appendChild(newLog);
-        }
+      // Save results to Firestore
+      db.collection("quizResults").add({
+        name: name,
+        score: score,
+        violations: violations,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("result").innerHTML = `<b>${name}, you scored ${score}/5</b>.`;
+        alert("Quiz submitted!");
+      }).catch(error => {
+        console.error("Error saving data:", error);
+        alert("⚠️ Error submitting quiz.");
       });
+    });
+  </script>
 
-     
-      document.getElementById("test-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const responses = {};
-        formData.forEach((value, key) => responses[key] = value);
-
-       
-        const time = new Date().toLocaleTimeString();
-        const submissionLog = document.createElement("p");
-        submissionLog.textContent = `${time} - Form submitted: ${JSON.stringify(responses)}`;
-        logDiv.appendChild(submissionLog);
-
-        
-        fetch('http://localhost:8000/submit-responses', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(responses)
-        })
-        .then(response => response.json())
-        .then(data => console.log('Submission logged:', data))
-        .catch(error => console.error('Error submitting form:', error));
-
-       
-        warningMsg.style.display = "none";
-      });
-    </script>
-  </body>
+</body>
 </html>
