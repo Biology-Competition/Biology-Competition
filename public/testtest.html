@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Biology Competition Quiz</title>
   
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
-  
 
   <style>
     body {
@@ -24,11 +23,6 @@
       background: white;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    .warning {
-      color: red;
-      font-weight: bold;
-      display: none;
     }
     button {
       background-color: #28a745;
@@ -47,9 +41,7 @@
 
   <div class="container">
     <h2>Biology Competition Quiz</h2>
-    <p><b>Rules:</b> No switching tabs. Your activity is being monitored.</p>
-
-    <div id="warning" class="warning">⚠️ Warning: Rule Violation Detected!</div>
+    <p><b>Rules:</b> No switching tabs or minimizing. Your activity is being monitored.</p>
 
     <form id="quiz-form">
       <label><b>Name:</b></label>
@@ -102,7 +94,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Answer Key
     const answerKey = {
       q1: "Mitochondria",
       q2: "Nucleotides",
@@ -112,29 +103,48 @@
     };
 
     let violations = 0;
+    let startTime = null;
+    let hasStarted = false;
+    let userName = "";
 
-    // Detect tab switching
-    document.addEventListener("visibilitychange", function() {
+    // Detect when quiz begins (user focuses inside the form)
+    document.getElementById("quiz-form").addEventListener("focusin", () => {
+      if (!hasStarted) {
+        userName = document.getElementById("name").value.trim();
+        if (userName === "") return;
+
+        hasStarted = true;
+        startTime = new Date();
+
+        db.collection("quizStartTimes").add({
+          name: userName,
+          startTime: firebase.firestore.Timestamp.fromDate(startTime)
+        }).then(() => {
+          console.log("Start time recorded.");
+        }).catch((error) => {
+          console.error("Error recording start time:", error);
+        });
+      }
+    });
+
+    // Detect tab switch
+    document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
-        document.getElementById("warning").style.display = "block";
         violations++;
       }
     });
 
-    // Detect cursor leaving the window
-    document.addEventListener("mouseleave", function(e) {
-      if (e.clientY <= 0) {
-        document.getElementById("warning").style.display = "block";
-        violations++;
-      }
+    // Detect window blur (minimize or switch app)
+    window.addEventListener("blur", function () {
+      violations++;
     });
 
-    // Form submission handling
-    document.getElementById("quiz-form").addEventListener("submit", function(e) {
+    // Form submission
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
       e.preventDefault();
 
       let score = 0;
-      let name = document.getElementById("name").value;
+      userName = document.getElementById("name").value;
       let answers = new FormData(e.target);
       let userAnswers = {};
 
@@ -143,14 +153,13 @@
         if (value === answerKey[key]) score++;
       });
 
-      // Save results to Firestore
       db.collection("quizResults").add({
-        name: name,
+        name: userName,
         score: score,
         violations: violations,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        document.getElementById("result").innerHTML = `<b>${name}, you scored ${score}/5</b>.`;
+        document.getElementById("result").innerHTML = ``;
         alert("Quiz submitted!");
       }).catch(error => {
         console.error("Error saving data:", error);
@@ -158,6 +167,5 @@
       });
     });
   </script>
-
 </body>
 </html>
