@@ -1,68 +1,90 @@
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Test Runner | American Regional Biology Competition</title>
-    <meta name="description" content="Test-run interface for monitoring responses and behavior">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    
-    <link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha-1.min.css">
-    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <style>
-      .test-container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      }
-      .warning {
-        color: red;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    
-    <div id="header"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARBC Test Quiz</title>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
 
-    <div class="test-container">
-      <h2>ARBC Nationals 2025</h2>
-      <p>Please complete the questions below. No outside sources are allowed. Use of AI or collaboration with anyone is strictly prohibited.</p>
-      
-      <!-- Warning message container -->
-      <div id="warning-msg" class="warning" style="display:none;"></div>
-      
-      <form id="test-form">
-        <div class="mb-3">
-          <label for="q2" class="form-label">1. What is your full name?</label>
-          <textarea class="form-control" id="q3" name="q3" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="q1" class="form-label">2. What is the powerhouse of the cell?</label>
-          <select class="form-select" id="q1" name="q1" required>
-            <option value="">Select an answer</option>
-            <option value="Mitochondria">Mitochondria</option>
-            <option value="Peroxisome">Peroxisome</option>
-            <option value="Golgi Body">Golgi Body</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="q2" class="form-label">3. Briefly describe photosynthesis:</label>
-          <textarea class="form-control" id="q2" name="q2" rows="3" required></textarea>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      
-      
-      <div id="log" style="margin-top:20px; font-size: 0.9em;"></div>
-    </div>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      display: none;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Biology Competition Quiz</h2>
+    <p><b>Rules:</b> No switching tabs. Your activity is being monitored.</p>
+
+    <div id="warning" class="warning">⚠️ Warning: Rule Violation Detected!</div>
+
+    <form id="quiz-form">
+      <label><b>Name:</b></label>
+      <input type="text" id="name" required><br><br>
+
+      <label>1. What is the powerhouse of the cell?</label><br>
+      <input type="radio" name="q1" value="Mitochondria" required> Mitochondria<br>
+      <input type="radio" name="q1" value="Peroxisome"> Peroxisome<br>
+      <input type="radio" name="q1" value="Golgi Body"> Golgi Body<br><br>
+
+      <label>2. DNA is made up of?</label><br>
+      <input type="radio" name="q2" value="Amino Acids"> Amino Acids<br>
+      <input type="radio" name="q2" value="Nucleotides" required> Nucleotides<br>
+      <input type="radio" name="q2" value="Lipids"> Lipids<br><br>
+
+      <label>3. Which organ filters blood in the human body?</label><br>
+      <input type="radio" name="q3" value="Liver"> Liver<br>
+      <input type="radio" name="q3" value="Kidney" required> Kidney<br>
+      <input type="radio" name="q3" value="Heart"> Heart<br><br>
+
+      <label>4. What carries oxygen in the blood?</label><br>
+      <input type="radio" name="q4" value="White Blood Cells"> White Blood Cells<br>
+      <input type="radio" name="q4" value="Hemoglobin" required> Hemoglobin<br>
+      <input type="radio" name="q4" value="Platelets"> Platelets<br><br>
+
+      <label>5. What is the primary function of ribosomes?</label><br>
+      <input type="radio" name="q5" value="Protein Synthesis" required> Protein Synthesis<br>
+      <input type="radio" name="q5" value="DNA Replication"> DNA Replication<br>
+      <input type="radio" name="q5" value="Energy Production"> Energy Production<br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+    
+    <p id="result"></p>
+  </div>
 
     <footer class="footer pt-150 gray-bg">
       <img src="assets/img/shape/footer-bg.svg" alt="" class="footer-bg">
@@ -80,7 +102,7 @@
                   <li><a href="resources.html">Resources</a></li>
                   <li><a href="sponsors.html">Sponsors</a></li>
                   <li><a href="about.html">About</a></li>
-                  <li><a href="regions.html">Features</a></li>
+                  <li><a href="regions.html">Regions</a></li>
                 </ul>
               </nav>
             </div>
