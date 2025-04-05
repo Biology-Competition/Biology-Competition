@@ -1,184 +1,171 @@
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Test Runner | American Regional Biology Competition</title>
-    <meta name="description" content="Test-run interface for monitoring responses and behavior">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biology Competition Quiz</title>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Biology Competition Quiz</h2>
+    <p><b>Rules:</b> No switching tabs or minimizing. Your activity is being monitored.</p>
+
+    <form id="quiz-form">
+      <label><b>Name:</b></label>
+      <input type="text" id="name" required><br><br>
+
+      <label>1. What is the powerhouse of the cell?</label><br>
+      <input type="radio" name="q1" value="Mitochondria" required> Mitochondria<br>
+      <input type="radio" name="q1" value="Peroxisome"> Peroxisome<br>
+      <input type="radio" name="q1" value="Golgi Body"> Golgi Body<br><br>
+
+      <label>2. DNA is made up of?</label><br>
+      <input type="radio" name="q2" value="Amino Acids"> Amino Acids<br>
+      <input type="radio" name="q2" value="Nucleotides" required> Nucleotides<br>
+      <input type="radio" name="q2" value="Lipids"> Lipids<br><br>
+
+      <label>3. Which organ filters blood in the human body?</label><br>
+      <input type="radio" name="q3" value="Liver"> Liver<br>
+      <input type="radio" name="q3" value="Kidney" required> Kidney<br>
+      <input type="radio" name="q3" value="Heart"> Heart<br><br>
+
+      <label>4. What carries oxygen in the blood?</label><br>
+      <input type="radio" name="q4" value="White Blood Cells"> White Blood Cells<br>
+      <input type="radio" name="q4" value="Hemoglobin" required> Hemoglobin<br>
+      <input type="radio" name="q4" value="Platelets"> Platelets<br><br>
+
+      <label>5. What is the primary function of ribosomes?</label><br>
+      <input type="radio" name="q5" value="Protein Synthesis" required> Protein Synthesis<br>
+      <input type="radio" name="q5" value="DNA Replication"> DNA Replication<br>
+      <input type="radio" name="q5" value="Energy Production"> Energy Production<br><br>
+
+      <button type="submit">Submit</button>
+    </form>
     
-    <link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha-1.min.css">
-    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <style>
-      .test-container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    <p id="result"></p>
+  </div>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const answerKey = {
+      q1: "Mitochondria",
+      q2: "Nucleotides",
+      q3: "Kidney",
+      q4: "Hemoglobin",
+      q5: "Protein Synthesis"
+    };
+
+    let violations = 0;
+    let startTime = null;
+    let hasStarted = false;
+    let userName = "";
+
+    // Detect when quiz begins (user focuses inside the form)
+    document.getElementById("quiz-form").addEventListener("focusin", () => {
+      if (!hasStarted) {
+        userName = document.getElementById("name").value.trim();
+        if (userName === "") return;
+
+        hasStarted = true;
+        startTime = new Date();
+
+        db.collection("quizStartTimes").add({
+          name: userName,
+          startTime: firebase.firestore.Timestamp.fromDate(startTime)
+        }).then(() => {
+          console.log("Start time recorded.");
+        }).catch((error) => {
+          console.error("Error recording start time:", error);
+        });
       }
-      .warning {
-        color: red;
-        font-weight: bold;
+    });
+
+    // Detect tab switch
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        violations++;
       }
-    </style>
-  </head>
-  <body>
-    
-    <div id="header"></div>
+    });
 
-    <div class="test-container">
-      <h2>ARBC Nationals 2025</h2>
-      <p>Please complete the questions below. No outside sources are allowed. Use of AI or collaboration with anyone is strictly prohibited.</p>
-      
-      <!-- Warning message container -->
-      <div id="warning-msg" class="warning" style="display:none;"></div>
-      
-      <form id="test-form">
-        <div class="mb-3">
-          <label for="q2" class="form-label">1. What is your full name?</label>
-          <textarea class="form-control" id="q3" name="q3" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="q1" class="form-label">2. What is the powerhouse of the cell?</label>
-          <select class="form-select" id="q1" name="q1" required>
-            <option value="">Select an answer</option>
-            <option value="Mitochondria">Mitochondria</option>
-            <option value="Peroxisome">Peroxisome</option>
-            <option value="Golgi Body">Golgi Body</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="q2" class="form-label">3. Briefly describe photosynthesis:</label>
-          <textarea class="form-control" id="q2" name="q2" rows="3" required></textarea>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      
-      
-      <div id="log" style="margin-top:20px; font-size: 0.9em;"></div>
-    </div>
+    // Detect window blur (minimize or switch app)
+    window.addEventListener("blur", function () {
+      violations++;
+    });
 
-    <footer class="footer pt-150 gray-bg">
-      <img src="assets/img/shape/footer-bg.svg" alt="" class="footer-bg">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="footer-links text-center">
-              <a href="./" class="logo">
-                <img src="assets/img/logo/logo.svg" alt="" height="100px">
-              </a>
-              <nav class="footer-menu">
-                <ul>
-                  <li><a href="./">Home</a></li>
-                  <li><a href="competition.html">Competition</a></li>
-                  <li><a href="resources.html">Resources</a></li>
-                  <li><a href="sponsors.html">Sponsors</a></li>
-                  <li><a href="about.html">About</a></li>
-                  <li><a href="regions.html">Features</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <div class="copyright-area text-center">
-          <p class="mb-0">&copy; 2024 American Regional Biology Competition</p>
-        </div>
-      </div>
-    </footer>
-    
-    <a href="#" class="scroll-top">
-      <i class="lni lni-chevron-up"></i>
-    </a>
+    // Form submission
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    <script src="assets/js/bootstrap.bundle-5.0.0.alpha-1-min.js"></script>
-    <script src="assets/js/count-up.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-     
-      $(function() {
-        $("#header").load("../assets/insertables/header.html");
+      let score = 0;
+      userName = document.getElementById("name").value;
+      let answers = new FormData(e.target);
+      let userAnswers = {};
+
+      answers.forEach((value, key) => {
+        userAnswers[key] = value;
+        if (value === answerKey[key]) score++;
       });
 
-     
-      const warningMsg = document.getElementById("warning-msg");
-      const logDiv = document.getElementById("log");
-
-      
-      function sendLogEvent(eventType) {
-        fetch('http://localhost:8000/log-event', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ eventType })
-        })
-        .then(response => response.json())
-        .then(data => console.log('Logged event:', data))
-        .catch(error => console.error('Error logging event:', error));
-      }
-
-      
-      document.addEventListener("visibilitychange", function() {
-        if (document.visibilityState === "hidden") {
-          warningMsg.style.display = "block";
-          warningMsg.textContent = "Warning: Tab switching detected!";
-          sendLogEvent("tab_switch");
-          const time = new Date().toLocaleTimeString();
-          const newLog = document.createElement("p");
-          newLog.textContent = `${time} - Tab switch detected`;
-          logDiv.appendChild(newLog);
-        }
+      db.collection("quizResults").add({
+        name: userName,
+        score: score,
+        violations: violations,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("result").innerHTML = ``;
+        alert("Quiz submitted!");
+      }).catch(error => {
+        console.error("Error saving data:", error);
+        alert("⚠️ Error submitting quiz.");
       });
-
-      // Cursor exit detection
-      document.addEventListener("mouseleave", function(e) {
-        if (e.clientY <= 0) {
-          warningMsg.style.display = "block";
-          warningMsg.textContent = "Warning: Cursor left the window!";
-          sendLogEvent("cursor_exit");
-          const time = new Date().toLocaleTimeString();
-          const newLog = document.createElement("p");
-          newLog.textContent = `${time} - Cursor left the window`;
-          logDiv.appendChild(newLog);
-        }
-      });
-
-     
-      document.getElementById("test-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const responses = {};
-        formData.forEach((value, key) => responses[key] = value);
-
-       
-        const time = new Date().toLocaleTimeString();
-        const submissionLog = document.createElement("p");
-        submissionLog.textContent = `${time} - Form submitted: ${JSON.stringify(responses)}`;
-        logDiv.appendChild(submissionLog);
-
-        
-        fetch('http://localhost:8000/submit-responses', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(responses)
-        })
-        .then(response => response.json())
-        .then(data => console.log('Submission logged:', data))
-        .catch(error => console.error('Error submitting form:', error));
-
-       
-        warningMsg.style.display = "none";
-      });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
