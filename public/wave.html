@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wave Quiz</title>
+  <style>
+    .testimage {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .question {
+      margin-bottom: 30px;
+      display: none;
+    }
+    .question.active {
+      display: block;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Wave Round</h1>
+
+  <!-- Question 1 -->
+  <div class="question active" id="question1">
+    <p><strong>1. Shown below is the rehabilitation of a forest after a fire in Colorado.</strong></p>
+    <img src="../assets/img/testimages/ecodisaster.png" alt="" class="testimage">
+    <label><input type="checkbox" value="F"> The ecological process is primary succession.</label><br>
+    <label><input type="checkbox" value="F"> Lichen and mosses were likely the first to repopulate.</label><br>
+    <label><input type="checkbox" value="T"> Recovery will resemble pre-fire state.</label><br>
+    <label><input type="checkbox" value="T"> Moderate fires can benefit diversity.</label><br>
+    <button onclick="submitQuestion(1, ['F','F','T','T'])">Submit Question 1</button>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="question" id="question2">
+    <p><strong>2. Pressure and flow during the cardiac cycle.</strong></p>
+    <label><input type="checkbox" value="F"> Aortic/pulmonary valves close, allowing filling.</label><br>
+    <label><input type="checkbox" value="T"> From 1 to 2, systole occurs.</label><br>
+    <label><input type="checkbox" value="T"> Atrial failure wouldn't change the red line.</label><br>
+    <label><input type="checkbox" value="T"> Aortic pressure rise at 3 is valve recoil.</label><br>
+    <button onclick="submitQuestion(2, ['F','T','T','T'])">Submit Question 2</button>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <!-- Add more questions here following the same format -->
+
+  <!-- ADD INSIDE YOUR <script> TAG AT BOTTOM -->
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  
+    let violationCount = 0;
+  
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) violationCount++;
+    });
+  
+    window.addEventListener("blur", () => {
+      violationCount++;
+    });
+  
+    window.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      violationCount++;
+    });
+  
+    function autoScore(partA, partB, partC, partD, partE) {
+      let score = 0;
+  
+      // Basic keyword-based scoring (case-insensitive)
+      const check = (answer, keywords) => {
+        const lower = answer.toLowerCase();
+        return keywords.some(k => lower.includes(k));
+      };
+  
+      if (check(partA, ["glutamic", "glutamate", "glutamic acid"])) score++;
+      if (check(partB, ["decreasing", "reduction", "lower", "dropping"])) score++;
+      if (check(partC, ["1.5", "equiv", "1.4", "1.6"])) score++;
+      if (check(partD, ["isoelectric", "zwitterion", "zero net charge"])) score++;
+      if (check(partE, ["histidine", "arginine", "lysine", "glutamate", "aspartate", "tyrosine", "cysteine"])) score++;
+  
+      return score;
+    }
+  
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+  
+      const teamName = document.getElementById("team").value.trim();
+      const userName = document.getElementById("name").value.trim();
+      const partA = document.getElementById("partA").value.trim();
+      const partB = document.getElementById("partB").value.trim();
+      const partC = document.getElementById("partC").value.trim();
+      const partD = document.getElementById("partD").value.trim();
+      const partE = document.getElementById("partE").value.trim();
+  
+      if (!teamName || !userName || !partA || !partB || !partC || !partD || !partE) {
+        alert("Please fill in all fields.");
+        return;
+      }
+  
+      const score = autoScore(partA, partB, partC, partD, partE);
+  
+      db.collection("waveresults").add({
+        team: teamName,
+        name: userName,
+        score: score,
+        violations: violationCount,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("result").innerHTML = "✅ Your responses have been submitted successfully.";
+        document.getElementById("quiz-form").reset();
+        violationCount = 0;
+      }).catch(error => {
+        console.error("Error saving data:", error);
+        alert("⚠️ Error submitting your responses. Please try again.");
+      });
+    });
+  </script>
+  
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Biochemistry Titration Curve Question</title>
+  <title>Team Round</title>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
@@ -46,9 +46,8 @@
     button:hover {
       background-color: #218838;
     }
-    textarea {
+    textarea, input[type="text"] {
       width: 100%;
-      height: 80px;
       padding: 8px;
       margin-top: 5px;
       margin-bottom: 15px;
@@ -64,10 +63,13 @@
 <body>
 
   <div class="container">
-    <h2>Biochemistry Titration Curve Question</h2>
+    <h2>Team Round</h2>
     <p><b>Instructions:</b> Please answer all parts of the question below. Your responses will be recorded for evaluation.</p>
 
     <form id="quiz-form">
+      <label for="team">Team:</label><br>
+      <input type="text" id="team" name="team" required><br>
+
       <label for="name">Name:</label><br>
       <input type="text" id="name" name="name" required><br><br>
     
@@ -111,7 +113,6 @@
 
     let violationCount = 0;
 
-    // Violation tracking
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) violationCount++;
     });
@@ -128,6 +129,7 @@
     document.getElementById("quiz-form").addEventListener("submit", function (e) {
       e.preventDefault();
 
+      const teamName = document.getElementById("team").value.trim();
       const userName = document.getElementById("name").value.trim();
       const partA = document.getElementById("partA").value.trim();
       const partB = document.getElementById("partB").value.trim();
@@ -135,12 +137,13 @@
       const partD = document.getElementById("partD").value.trim();
       const partE = document.getElementById("partE").value.trim();
 
-      if (!userName || !partA || !partB || !partC || !partD || !partE) {
+      if (!teamName || !userName || !partA || !partB || !partC || !partD || !partE) {
         alert("Please fill in all fields.");
         return;
       }
 
       db.collection("teamresults").add({
+        team: teamName,
         name: userName,
         responses: {
           partA,
