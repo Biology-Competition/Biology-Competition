@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biology Competition Quiz</title>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+
+  <style>
+    .testimage {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Biology Competition Quiz</h2>
+    <p><b>Rules:</b> No switching tabs or minimizing. Your activity is being monitored.</p>
+
+    <form id="quiz-form">
+      <label><b>Name:</b></label>
+      <input type="text" id="name" required><br><br>
+
+      <label>1. Selenocysteine is derived from which amino acid?</label><br>
+<input type="radio" name="q1" value="Methionine"> Methionine<br>
+<input type="radio" name="q1" value="Cysteine"> Cysteine<br>
+<input type="radio" name="q1" value="Tyrosine"> Tyrosine<br>
+<input type="radio" name="q1" value="Serine" required> Serine<br>
+<input type="radio" name="q1" value="Lysine"> Lysine<br><br>
+
+<label>2. During replicative mitosis in a hexaploid human hepatocyte, how many kinetochores are present during metaphase?</label><br>
+<input type="radio" name="q2" value="6"> 6<br>
+<input type="radio" name="q2" value="12"> 12<br>
+<input type="radio" name="q2" value="23"> 23<br>
+<input type="radio" name="q2" value="138"> 138<br>
+<input type="radio" name="q2" value="276" required> 276<br><br>
+
+<label>3. Disulfide bonds and nitrate are both uncommon in the cytosol. Nitrate, in particular, is often
+  converted to ammonia after entering the cell. Can you think of a good explanation that
+  connects these two phenomena?</label><br>
+<input type="radio" name="q3" value="High oxygen levels in cytosol"> The cytosol contains high levels of oxygen<br>
+<input type="radio" name="q3" value="Sulfur competition"> There is high competition for reactive sulfur<br>
+<input type="radio" name="q3" value="Alkaline pH"> Cellular pH is slightly more alkaline<br>
+<input type="radio" name="q3" value="Reducing environment" required> The cytosol is a naturally reducing environment<br>
+<input type="radio" name="q3" value="Random coincidence"> Random coincidence<br><br>
+
+<label>4. Which of the following is true about the trp operon?</label><br>
+<input type="radio" name="q4" value="On at high tryptophan"> Transcription is "on" at high concentrations of tryptophan<br>
+<input type="radio" name="q4" value="Tryptophan is inducer"> Tryptophan acts as an inducer<br>
+<input type="radio" name="q4" value="Found in eukaryotes"> It is mainly found in eukaryotes<br>
+<input type="radio" name="q4" value="Catabolic regulation"> It directly regulates a catabolic pathway<br>
+<input type="radio" name="q4" value="Anabolic regulation" required> It directly regulates an anabolic pathway<br><br>
+
+<label>5. Which amino acid contributes most to UV light absorption at ~280 nm?</label><br>
+<input type="radio" name="q5" value="Phe"> Phe<br>
+<input type="radio" name="q5" value="Tyr"> Tyr<br>
+<input type="radio" name="q5" value="Trp" required> Trp<br>
+<input type="radio" name="q5" value="His"> His<br>
+<input type="radio" name="q5" value="Pro"> Pro<br><br>
+
+<label>6. Dr. Doom wants to isolate mtDNA from a culture of mouse epithelial cells. He trypsinizes and
+  lyses the cells, centrifuges the cells at 5,000 g, removes the supernatant, centrifuges it at 10,000
+  g, isolates the supernatant again, and centrifuges it at 30,000 g. He then removes the pellet,
+  adds digitonin, a cholesterol-targeting detergent, to break open the mitochondrial membrane,
+  and introduces a DNase to purify the mtDNA. Unfortunately, Dr. Doom is an idiot, and he
+  made a whole host of mistakes during this procedure. Which of the following is NOT a
+  mistake Dr. Doom made?</label><br>
+<input type="radio" name="q6" value="Trypsinizing cells" required> Adding trypsin to detach cells<br>
+<input type="radio" name="q6" value="Three centrifugation rounds"> Doing three rounds of centrifugation<br>
+<input type="radio" name="q6" value="Digitonin use"> Adding digitonin to lyse the mitochondrial membrane<br>
+<input type="radio" name="q6" value="Using DNase"> Using a DNase to purify the mtDNA<br>
+<input type="radio" name="q6" value="Everything was wrong"> Everything Dr. Doom did was a mistake<br><br>
+
+<label>7. Robert has suddenly taken an interest in prokaryotic chaperones and decides to do a research project on Trigger Factor. Your friend looks through some of Robert’s initial ndings, however, and is completely appalled. They claim everything Robert has written down is completely wrong. Can you help Robert prove your friend wrong by nding the single accurate statement in Robert’s notes below?</label><br>
+<input type="radio" name="q7" value="Protein degradation"> Focused on protein folding and degradation<br>
+<input type="radio" name="q7" value="Hydrogen bonds"> Chemically interacts with proteins via H-bonds<br>
+<input type="radio" name="q7" value="Interacts pre-ribosome exit" required> Interacts with proteins before they’ve emerged from the ribosome<br>
+<input type="radio" name="q7" value="Spliced gene"> Gene is heavily spliced<br>
+<input type="radio" name="q7" value="Ligase"> Technically classified as a ligase<br><br>
+
+<img src="../assets/img/testimages/fluorograph.png" alt="" class="testimage">
+<label>8. What is the approximate immobile fraction of the membrane in a FRAP experiment?</label><br>
+<input type="radio" name="q8" value="0.95"> 0.95<br>
+<input type="radio" name="q8" value="0.05" required> 0.05<br>
+<input type="radio" name="q8" value="0.6" > 0.6<br>
+<input type="radio" name="q8" value="0.4"> 0.4<br>
+<input type="radio" name="q8" value="0.5"> 0.5<br><br>
+
+<label>9. FepA is a β-barrel protein found in bacteria. It primarily transports iron as well as vitamin B12 and colicins B and D. Given its role in bacterial survival, finding therapeutics targeting FepA is critical. You are tasked with designing a new drug that can disable this receptor’s function. Select all the following properties that impact the e cacy of your drug? I. Size of molecule II. Affnity for iron III. Proportion of hydrophilic amino acid residues IV. Specificity for FepA’s ligand binding site.</label><br>
+<input type="radio" name="q9" value="I, II"> I, II<br>
+<input type="radio" name="q9" value="II, III, IV"> II, III, IV<br>
+<input type="radio" name="q9" value="I, II, III" required> I, II, III<br>
+<input type="radio" name="q9" value="I, II, IV" > I, II, IV<br>
+<input type="radio" name="q9" value="I, III, IV"> I, III, IV<br><br>
+
+<label>10. Which of the following reagents would typically be used in a standard RT-PCR run? I. RNA polymerase II. Reverse transcriptase III. E. coli DNA polymerase IV. Pfu DNA polymerase V. DNA primers VI. RNA primers</label><br>
+<input type="radio" name="q10" value="I, III, V"> I, III, V<br>
+<input type="radio" name="q10" value="II, IV, V" required> II, IV, V<br>
+<input type="radio" name="q10" value="II, III, V"> II, III, V<br>
+<input type="radio" name="q10" value="II, III, VI"> II, III, VI<br>
+<input type="radio" name="q10" value="II, IV, VI"> II, IV, VI<br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+    
+    <p id="result"></p>
+  </div>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const answerKey = {
+      q1: "Serine",
+      q2: "276",
+      q3: "Reducing environment",
+      q4: "Anabolic regulation",
+      q5: "Trp",
+      q6: "Trypsinizing cells",
+      q7:"Interacts pre-ribosome exit",
+      q8: "0.05",
+      q9: "I, II, III",
+      q10: "II, IV, V",
+    };
+
+    let violations = 0;
+    let startTime = null;
+    let hasStarted = false;
+    let userName = "";
+
+    // Detect when quiz begins (user focuses inside the form)
+    document.getElementById("quiz-form").addEventListener("focusin", () => {
+      if (!hasStarted) {
+        userName = document.getElementById("name").value.trim();
+        if (userName === "") return;
+
+        hasStarted = true;
+        startTime = new Date();
+
+        db.collection("quizStartTimes").add({
+          name: userName,
+          startTime: firebase.firestore.Timestamp.fromDate(startTime)
+        }).then(() => {
+          console.log("Start time recorded.");
+        }).catch((error) => {
+          console.error("Error recording start time:", error);
+        });
+      }
+    });
+
+    // Detect tab switch
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        violations++;
+      }
+    });
+
+    // Detect window blur (minimize or switch app)
+    window.addEventListener("blur", function () {
+      violations++;
+    });
+
+    // Form submission
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let score = 0;
+      userName = document.getElementById("name").value;
+      let answers = new FormData(e.target);
+      let userAnswers = {};
+
+      answers.forEach((value, key) => {
+        userAnswers[key] = value;
+        if (value === answerKey[key]) score++;
+      });
+
+      db.collection("quizResults").add({
+        name: userName,
+        score: score,
+        violations: violations,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("result").innerHTML = ``;
+        alert("Quiz submitted!");
+      }).catch(error => {
+        console.error("Error saving data:", error);
+        alert("⚠️ Error submitting quiz.");
+      });
+    });
+  </script>
+</body>
+</html>

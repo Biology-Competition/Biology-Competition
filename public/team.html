@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biochemistry Titration Curve Question</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+
+  <style>
+    .testimage {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Biochemistry Titration Curve Question</h2>
+    <p><b>Instructions:</b> Please answer all parts of the question below. Your responses will be recorded for evaluation.</p>
+
+    <form id="quiz-form">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+    
+      <img src="../assets/img/testimages/titration.png" alt="" class="testimage">
+      <p><b>Question:</b> To study for a biochemistry exam, your friend uses Wolfram Alpha to generate the titration curve of a mystery amino acid. Answer the following questions about the titration.</p>
+
+      <label for="partA">a. What amino acid was titrated above?</label><br>
+      <textarea id="partA" name="partA" required></textarea>
+
+      <label for="partB">b. What is happening to the Hydrogen ion concentration as the base is added?</label><br>
+      <textarea id="partB" name="partB" required></textarea>
+
+      <label for="partC">c. What is the approximate equivalent OH at which the average charge is -1.5?</label><br>
+      <textarea id="partC" name="partC" required></textarea>
+
+      <label for="partD">d. What is the approximate equivalent OH at the Isoelectric point, and what condition defines this point (what is true and only true at this point)?</label><br>
+      <textarea id="partD" name="partD" required></textarea>
+
+      <label for="partE">e. Name three other amino acids that could have three separate pKa values:</label><br>
+      <textarea id="partE" name="partE" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let violationCount = 0;
+
+    // Violation tracking
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) violationCount++;
+    });
+
+    window.addEventListener("blur", () => {
+      violationCount++;
+    });
+
+    window.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      violationCount++;
+    });
+
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userName = document.getElementById("name").value.trim();
+      const partA = document.getElementById("partA").value.trim();
+      const partB = document.getElementById("partB").value.trim();
+      const partC = document.getElementById("partC").value.trim();
+      const partD = document.getElementById("partD").value.trim();
+      const partE = document.getElementById("partE").value.trim();
+
+      if (!userName || !partA || !partB || !partC || !partD || !partE) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      db.collection("teamresults").add({
+        name: userName,
+        responses: {
+          partA,
+          partB,
+          partC,
+          partD,
+          partE
+        },
+        violations: violationCount,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("result").innerHTML = "✅ Your responses have been submitted successfully.";
+        document.getElementById("quiz-form").reset();
+        violationCount = 0;
+      }).catch(error => {
+        console.error("Error saving data:", error);
+        alert("⚠️ Error submitting your responses. Please try again.");
+      });
+    });
+  </script>
+</body>
+</html>
