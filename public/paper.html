@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EEE Paper Response</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      max-width: 800px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+
+  <h1>Paper Round</h1>
+
+  <label>Name:</label>
+  <input type="text" id="userName" required>
+
+  <label>Team Name:</label>
+  <input type="text" id="teamName" required>
+
+  <form id="eeeForm">
+    <!-- Communication -->
+    <label>1. What is the primary vector of eastern equine encephalitis (EEE)?</label>
+    <textarea id="q1"></textarea>
+
+    <label>2. What is the best way to protect against EEE? Why?</label>
+    <textarea id="q2"></textarea>
+
+    <label>3. Explain in detail how EEE has impacted the lives of individuals in the towns where it has spread.</label>
+    <textarea id="q3"></textarea>
+
+    <!-- Paper -->
+    <label>4. What are the two phases of EEE?</label>
+    <textarea id="q4"></textarea>
+
+    <label>5. Why were the tissue sections soaked to block endogenous peroxidases before incubation with antibodies?</label>
+    <textarea id="q5"></textarea>
+
+    <label>6. What antibodies were used?</label>
+    <textarea id="q6"></textarea>
+
+    <label>7. Why did they use both a primary and secondary antibody? What purpose do each serve?</label>
+    <textarea id="q7"></textarea>
+
+    <label>8. What general tissue type does the virus spread to before reaching the CNS? What is the more specific tissue subtype?</label>
+    <textarea id="q8"></textarea>
+
+    <label>9. Refer to Figure 2b. Why was IHC staining observed in macrophages, but ISH did not detect viral RNA?</label>
+    <textarea id="q9"></textarea>
+
+    <label>10. Which parts of the CNS were most strongly affected by the virus?</label>
+    <textarea id="q10"></textarea>
+
+    <label>11. Why does simultaneous presence of viral antigen and viral nucleic acids in a cell type indicate viral replication?</label>
+    <textarea id="q11"></textarea>
+
+    <!-- Synthesis -->
+    <label>12. What is the molecular reason behind EEE causing neurological problems?</label>
+    <textarea id="q12"></textarea>
+
+    <label>13. Give an example of a neurological issue EEE might cause. How?</label>
+    <textarea id="q13"></textarea>
+
+    <label>14. Why is EEE becoming a public health concern?</label>
+    <textarea id="q14"></textarea>
+
+    <button type="submit">Submit Responses</button>
+    <div class="success" id="successMsg"></div>
+  </form>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
+      authDomain: "arbc-5570e.firebaseapp.com",
+      projectId: "arbc-5570e",
+      storageBucket: "arbc-5570e.firebasestorage.app",
+      messagingSenderId: "614997417852",
+      appId: "1:614997417852:web:8c50ba980e7c538975cef9",
+      measurementId: "G-7HQS2LQED3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    document.getElementById("eeeForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("userName").value.trim();
+      const team = document.getElementById("teamName").value.trim();
+      if (!name || !team) {
+        alert("Please enter your name and team name.");
+        return;
+      }
+
+      const data = {
+        name,
+        team,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      for (let i = 1; i <= 14; i++) {
+        const answer = document.getElementById(`q${i}`).value.trim();
+        data[`q${i}`] = answer;
+      }
+
+      db.collection("paperresults").add(data)
+        .then(() => {
+          document.getElementById("successMsg").innerText = "✅ Your responses have been submitted successfully!";
+          document.getElementById("eeeForm").reset();
+        })
+        .catch(error => {
+          console.error("Error submitting responses:", error);
+          alert("⚠️ Something went wrong. Please try again.");
+        });
+    });
+  </script>
+
+</body>
+</html>

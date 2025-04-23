@@ -31,10 +31,17 @@
       font-weight: bold;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
 
   <h1>Wave Round</h1>
+
+  <div id="userInfo">
+    <label>Name: <input type="text" id="userName" /></label><br><br>
+    <label>Team Name: <input type="text" id="teamName" /></label><br><br>
+  </div>
 
   <!-- Question 1 -->
   <div class="question active" id="question1">
@@ -51,6 +58,7 @@
   <!-- Question 2 -->
   <div class="question" id="question2">
     <p><strong>2. Pressure and flow during the cardiac cycle.</strong></p>
+    <img src="../assets/img/testimages/cardio.png" alt="" class="testimage">
     <label><input type="checkbox" value="F"> Aortic/pulmonary valves close, allowing filling.</label><br>
     <label><input type="checkbox" value="T"> From 1 to 2, systole occurs.</label><br>
     <label><input type="checkbox" value="T"> Atrial failure wouldn't change the red line.</label><br>
@@ -59,10 +67,12 @@
     <div class="result" id="result2"></div>
   </div>
 
-  <!-- Add more questions here following the same format -->
+  <!-- Final Submission Message -->
+  <div id="finalMessage" class="question">
+    <h2>✅ Thank you! Your answers have been submitted.</h2>
+  </div>
 
-  <!-- ADD INSIDE YOUR <script> TAG AT BOTTOM -->
-<script>
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyD8YfR37co0eDJOVIA7csdVm5piTRUZAjo",
       authDomain: "arbc-5570e.firebaseapp.com",
@@ -72,78 +82,79 @@
       appId: "1:614997417852:web:8c50ba980e7c538975cef9",
       measurementId: "G-7HQS2LQED3"
     };
-  
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-  
+
+    let currentScore = 0;
+    let currentQuestion = 1;
+    const totalQuestions = 2;
+
     let violationCount = 0;
-  
+
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) violationCount++;
     });
-  
+
     window.addEventListener("blur", () => {
       violationCount++;
     });
-  
+
     window.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       violationCount++;
     });
-  
-    function autoScore(partA, partB, partC, partD, partE) {
-      let score = 0;
-  
-      // Basic keyword-based scoring (case-insensitive)
-      const check = (answer, keywords) => {
-        const lower = answer.toLowerCase();
-        return keywords.some(k => lower.includes(k));
-      };
-  
-      if (check(partA, ["glutamic", "glutamate", "glutamic acid"])) score++;
-      if (check(partB, ["decreasing", "reduction", "lower", "dropping"])) score++;
-      if (check(partC, ["1.5", "equiv", "1.4", "1.6"])) score++;
-      if (check(partD, ["isoelectric", "zwitterion", "zero net charge"])) score++;
-      if (check(partE, ["histidine", "arginine", "lysine", "glutamate", "aspartate", "tyrosine", "cysteine"])) score++;
-  
-      return score;
-    }
-  
-    document.getElementById("quiz-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-  
-      const teamName = document.getElementById("team").value.trim();
-      const userName = document.getElementById("name").value.trim();
-      const partA = document.getElementById("partA").value.trim();
-      const partB = document.getElementById("partB").value.trim();
-      const partC = document.getElementById("partC").value.trim();
-      const partD = document.getElementById("partD").value.trim();
-      const partE = document.getElementById("partE").value.trim();
-  
-      if (!teamName || !userName || !partA || !partB || !partC || !partD || !partE) {
-        alert("Please fill in all fields.");
-        return;
+
+    function submitQuestion(questionNum, correctAnswers) {
+      const questionDiv = document.getElementById(`question${questionNum}`);
+      const checkboxes = questionDiv.querySelectorAll('input[type="checkbox"]');
+      let selectedAnswers = [];
+      checkboxes.forEach(cb => selectedAnswers.push(cb.checked ? "T" : "F"));
+
+      let questionScore = 0;
+      for (let i = 0; i < correctAnswers.length; i++) {
+        if (selectedAnswers[i] === correctAnswers[i]) {
+          questionScore++;
+        }
       }
-  
-      const score = autoScore(partA, partB, partC, partD, partE);
-  
-      db.collection("waveresults").add({
-        team: teamName,
-        name: userName,
-        score: score,
-        violations: violationCount,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("result").innerHTML = "✅ Your responses have been submitted successfully.";
-        document.getElementById("quiz-form").reset();
-        violationCount = 0;
-      }).catch(error => {
-        console.error("Error saving data:", error);
-        alert("⚠️ Error submitting your responses. Please try again.");
-      });
-    });
+      currentScore += questionScore;
+
+      document.getElementById(`result${questionNum}`).innerText = `You scored ${questionScore}/${correctAnswers.length} on this question.`;
+
+      // Hide current question
+      questionDiv.classList.remove("active");
+
+      // Show next question or submit final results
+      if (questionNum < totalQuestions) {
+        currentQuestion++;
+        document.getElementById(`question${currentQuestion}`).classList.add("active");
+      } else {
+        const name = document.getElementById("userName").value.trim();
+        const team = document.getElementById("teamName").value.trim();
+
+        if (!name || !team) {
+          alert("Please fill in your name and team name before submitting!");
+          // Show last question again if info missing
+          questionDiv.classList.add("active");
+          return;
+        }
+
+        db.collection("waveresults").add({
+          name: name,
+          team: team,
+          score: currentScore,
+          violations: violationCount,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+          document.getElementById("finalMessage").classList.add("active");
+          document.getElementById("userInfo").style.display = "none";
+        }).catch(err => {
+          console.error("Error submitting to Firebase:", err);
+          alert("⚠️ Error submitting your responses. Try again.");
+        });
+      }
+    }
   </script>
-  
 
 </body>
 </html>
