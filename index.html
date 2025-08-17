@@ -240,7 +240,86 @@
             </div>
         
         </section>
-        <!-- ========================= contact-section end ========================= -->
+
+        <!-- ========================= sponsors rolling banner start ========================= -->
+        <section id="sponsor-banner" class="gray-bg pt-80 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 text-center mb-4">
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Our Sponsors</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 text-center mb-3">
+                        <h3 class="wow fadeInUp" data-wow-delay=".3s" style="color: #a0b2c6;">Platinum Sponsors</h3>
+                        <div class="sponsor-banner-scroll platinum">
+                            <div class="sponsor-track">
+                                <a href="https://www.wolfram.com/" target="_blank"><img src="assets/img/sponsors/wolfram-logo.png" alt="Wolfram" class="sponsor"></a>
+                                <a href="https://baology.org/" target="_blank"><img src="assets/img/sponsors/baology_logo.png" alt="Baology" class="sponsor"></a>
+                                <a href="https://www.kungfutea.com/" target="_blank"><img src="assets/img/sponsors/kft_logo.png" alt="Kung Fu Tea" class="sponsor"></a>
+                                <!-- Duplicate for seamless loop -->
+                                <a href="https://www.wolfram.com/" target="_blank"><img src="assets/img/sponsors/wolfram-logo.png" alt="Wolfram" class="sponsor"></a>
+                                <a href="https://baology.org/" target="_blank"><img src="assets/img/sponsors/baology_logo.png" alt="Baology" class="sponsor"></a>
+                                <a href="https://www.kungfutea.com/" target="_blank"><img src="assets/img/sponsors/kft_logo.png" alt="Kung Fu Tea" class="sponsor"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 text-center mb-3">
+                        <h3 class="wow fadeInUp" data-wow-delay=".4s" style="color: rgb(154, 154, 154);">Silver Sponsors</h3>
+                        <div class="sponsor-banner-scroll silver">
+                            <div class="sponsor-track">
+                                <a href="https://artofproblemsolving.com/" target="_blank"><img src="assets/img/sponsors/aops-logo.svg" alt="AoPS" class="sponsor"></a>
+                                <a href="https://biolympiads.com/" target="_blank"><img src="assets/img/sponsors/bIolympiads_logo.png" alt="Biolympiads" class="sponsor"></a>
+                                <!-- Duplicate for seamless loop -->
+                                <a href="https://artofproblemsolving.com/" target="_blank"><img src="assets/img/sponsors/aops-logo.svg" alt="AoPS" class="sponsor"></a>
+                                <a href="https://biolympiads.com/" target="_blank"><img src="assets/img/sponsors/bIolympiads_logo.png" alt="Biolympiads" class="sponsor"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 text-center mt-4">
+                        <a href="contact.html" class="theme-btn wow fadeInUp" data-wow-delay=".5s" data-wow-duration="1.3s">Contact Us to Become a Sponsor!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <style>
+        .sponsor-banner-scroll {
+            width: 60vw;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            padding: 18px 0;
+            position: relative;
+        }
+        .sponsor-track {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            animation: sponsor-scroll 18s linear infinite;
+        }
+        .sponsor-banner-scroll img.sponsor {
+            height: 90px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .sponsor-banner-scroll.silver img.sponsor {
+            height: 70px;
+        }
+        @keyframes sponsor-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        </style>
+        <!-- ========================= sponsors rolling banner end ========================= -->
+        <!-- ========================= sponsors rolling banner end ========================= -->
 
         
         <!-- ========================= footer start ========================= -->
@@ -281,7 +360,7 @@
                                 <ul>
                                     <li><a href="./">Home</a></li>
                                     <li><a href="competition.html">Competition</a></li>
-                                    <li><a href="resources.html">Resources</a></li>
+                                    <li><a href="archives.html">Archives</a></li>
                                     <li><a href="sponsors.html">Sponsors</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="regions.html">Features</a></li>
